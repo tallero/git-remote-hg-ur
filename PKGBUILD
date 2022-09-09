@@ -24,5 +24,5 @@ check() {
 
 package() {
 	cd "$pkgname-$pkgver"
-	DESTDIR="$pkgdir" make prefix=/usr install install-doc
+	DESTDIR="$pkgdir/" make prefix=/usr install install-doc
 }
