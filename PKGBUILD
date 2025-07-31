@@ -1,7 +1,7 @@
 # Maintainer: Felipe Contreras <felipe.contreras@gmail.com>
 
 pkgname=git-remote-hg
-pkgver=0.6
+pkgver=0.7
 pkgrel=1
 pkgdesc='Bidirectional bridge between Git and Mercurial'
 arch=('any')
@@ -10,7 +10,7 @@ license=('GPL2')
 depends=('git' 'mercurial')
 makedepends=('asciidoctor')
 source=("${url}/archive/v${pkgver}.tar.gz")
-md5sums=('8a1acaba6d5f2acd453870b136695eba')
+md5sums=('69407466231b3cdfcc359cedf40d802c')
 
 build() {
 	cd "$pkgname-$pkgver"
