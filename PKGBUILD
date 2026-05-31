@@ -60,7 +60,7 @@ if [[ ! -v "_git_service" ]]; then
 fi
 if [[ ! -v "_tag_name" ]]; then
   _tag_name="commit"
-if 
+fi
 if [[ ! -v "_archive_format" ]]; then
   if [[ "${_git}" == "true" ]]; then
     if [[ "${_evmfs}" == "true" ]]; then
