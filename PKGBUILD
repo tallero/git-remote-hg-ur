@@ -113,6 +113,7 @@ depends=(
 makedepends=(
   'asciidoctor'
   "make"
+  "mercurial"
 )
 if [[ "${_git}" == "true" ]]; then
   makedepends+=(
