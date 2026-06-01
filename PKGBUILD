@@ -114,6 +114,16 @@ makedepends=(
   'asciidoctor'
   "make"
 )
+if [[ "${_git}" == "true" ]]; then
+  makedepends+=(
+    "git"
+  )
+fi
+if [[ "${_evmfs}" == "true" ]]; then
+  makedepends+=(
+    "evmfs"
+  )
+fi
 source=()
 sha256sums=()
 _url="${url}"
@@ -125,25 +135,35 @@ if [[ "${_offline}" == "true" ]]; then
 fi
 _bundle_sum="cd8c747f5519f6269af82e90bc7fe91330252fdcfda067bf152cd217ceb100a7"
 _bundle_sig_sum="1a6d941543b788748de7e217134ba4f4b4c0cb4a6012c1815090121c218eb776"
+_github_sum="eed9e4b82162838216415d99a4f55993c9ea02433358002e40c1479c5abdd732"
+_github_sig_sum="6d778349468a29f12b122ded3554afd6bbb7fec3ce6c50262d0bd06bace982bf"
+if [[ "${_git}" == "true" ]]; then
+  _sum="${_bundle_sum}"
+  _sig_sum="${_bundle_sig_sum}"
+elif [[ "${_git}" == "false" ]]; then
+  if [[ "${_git_service}" == "github" ]]; then
+    _sum="${_github_sum}"
+    _sig_sum="${_github_sig_sum}"
+  fi
+fi
 # Dvorak
 _evmfs_ns="0x87003Bd6C074C713783df04f36517451fF34CBEf"
 _evmfs_network="100"
 _evmfs_address="0x69470b18f8b8b5f92b48f6199dcb147b4be96571"
 _evmfs_dir="evmfs://${_evmfs_network}/${_evmfs_address}/${_evmfs_ns}"
-_evmfs_uri="${_evmfs_dir}/${_bundle_sum}"
+_evmfs_uri="${_evmfs_dir}/${_sum}"
 _evmfs_src="${_tarfile}::${_evmfs_uri}"
-_sig_uri="${_evmfs_dir}/${_bundle_sig_sum}"
+_sig_uri="${_evmfs_dir}/${_sig_sum}"
 _sig_src="${_tarfile}.sig::${_sig_uri}"
 if [[ "${_evmfs}" == "true" ]]; then
-  if [[ "${_git}" == "false" ]]; then
-    _src="${_evmfs_src}"
-    source+=(
-      "${_sig_src}"
-    )
-    sha256sums+=(
-      "${_bundle_sig_sum}"
-    )
-  fi
+  _src="${_evmfs_src}"
+  _sig_sum="${_sig_sum}"
+  source+=(
+    "${_sig_src}"
+  )
+  sha256sums+=(
+    "${_sig_sum}"
+  )
 elif [[ "${_evmfs}" == "false" ]]; then
   if [[ "${_git}" == true ]]; then
     _src="${_tarname}::git+${_url}#${_tag_name}=${_tag}?signed"
@@ -210,4 +230,3 @@ package() {
     install \
     install-doc
 }
-0x87003Bd6C074C713783df04f36517451fF34CBEf
