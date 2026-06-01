@@ -189,6 +189,10 @@ jobs:
           /entrypoint.sh \
             pip \
               install \
+                "mercurial"
+          /entrypoint.sh \
+            pip \
+              install \
                 "build"
           /entrypoint.sh \
             pip \
